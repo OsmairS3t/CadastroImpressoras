@@ -38,19 +38,9 @@ export class LeituraController {
     
     async list(req: Request, res: Response) {
         try {
-            const {idImpressora} = req.params;
             const leituras = await LeituraRepository
-                .createQueryBuilder("impressoras")
-                .leftJoinAndSelect("impressoras.leituras", "leituras")
-                .where("impressora.id = :name", { name: idImpressora })
+                .createQueryBuilder("leituras")
                 .getMany();
-
-            // const leituras = await LeituraRepository
-            //     .createQueryBuilder("leituras")
-            //     .leftJoinAndSelect("leitura", "leituras.impressora_id")
-            //     .where("impressora.id = :id", {id: idImpressora})
-            //     .getMany();
-
             return res.status(200).json(leituras);
         } catch (error) {
             console.log(error)

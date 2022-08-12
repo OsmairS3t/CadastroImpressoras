@@ -13,6 +13,6 @@ routes.get('/impressoras', new ImpressoraController().list)
 routes.get('/impressoras/:id/leituras', new ImpressoraController().listLeiturasImpressora)
 
 routes.post('/leituras/:idImpressora/create', new LeituraController().create)
-routes.get('/leituras/:idImpressora', new LeituraController().list)
+routes.get('/leituras', new LeituraController().list)
 
 export default routes;
