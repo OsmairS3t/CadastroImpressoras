@@ -44,11 +44,27 @@ export class ImpressoraController {
             const {id} = req.params;
             const leituras_impressora = await LeituraRepository
                 .createQueryBuilder("leituras")
-                .where("leituras.impressora_id = :id", { id: 1 })
+                .where("leituras.impressora_id = :id", { id: id })
                 .orderBy("leituras.data")
                 .getMany()
 
             return res.status(200).json(leituras_impressora);
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ message: 'Internal Server Error' })
+        }
+    }
+
+    async listImpressorasDepartamento(req: Request, res: Response) {
+        try {
+            const {id} = req.params;
+            const impressoras = await ImpressoraRepository
+                .createQueryBuilder("impressoras")
+                .where("impressoras.departamento_id = :id", { id: id })
+                .orderBy("impressoras.ip")
+                .getMany()
+
+            return res.status(200).json(impressoras);
         } catch (error) {
             console.log(error)
             return res.status(500).json({ message: 'Internal Server Error' })
