@@ -6,13 +6,13 @@ export class Leitura {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @CreateDateColumn({type: 'text'})
+    @CreateDateColumn({ type: 'text' })
     data: string;
 
-    @ManyToOne(() => Impressora, Impressora => Impressora.leituras)
-    @JoinColumn({name: 'impressora_id'})
-    impressora: Impressora; 
-    
-    @Column({type: 'integer'})
+    @ManyToOne(() => Impressora, (Impressora) => Impressora.leituras)
+    @JoinColumn({ name: 'impressora_id' })
+    impressora: Impressora;
+
+    @Column({ type: 'integer' })
     leitura: number;
 }

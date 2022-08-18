@@ -7,19 +7,19 @@ export class Impressora {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(() => Departamento, departamento => departamento.impressoras)
-    @JoinColumn({name: 'departamento_id'})
-    departamento: Departamento; 
+    @ManyToOne(() => Departamento, (departamento) => departamento.impressoras)
+    @JoinColumn({ name: 'departamento_id' })
+    departamento: Departamento;
 
     @OneToMany(() => Leitura, (leitura) => leitura.impressora)
     leituras: Leitura[]
 
-    @Column({type: 'text'})
+    @Column({ type: 'text' })
     impressora: string;
-    
-    @Column({type: 'text'})
+
+    @Column({ type: 'text' })
     modelo: string;
-    
-    @Column({type: 'text'})
+
+    @Column({ type: 'text' })
     ip: string;
 }

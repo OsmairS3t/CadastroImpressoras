@@ -19,9 +19,9 @@ export class LeituraController {
         const { idImpressora } = req.params;
 
         try {
-            const impress = await ImpressoraRepository.findOneBy({id: Number(idImpressora)});
+            const impress = await ImpressoraRepository.findOneBy({ id: Number(idImpressora) });
             if (!impress) {
-                return res.status(404).json({message: 'Impressora não encontrada'});
+                return res.status(404).json({ message: 'Impressora não encontrada' });
             }
             const novaLeitura = LeituraRepository.create({
                 data,
@@ -32,20 +32,38 @@ export class LeituraController {
             return res.status(201).json(novaLeitura);
         } catch (error) {
             console.log(error)
-            return res.status(500).json({message: 'Internal Server Error'})
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
-    
+
     async list(req: Request, res: Response) {
         try {
             const leituras = await LeituraRepository
-                .createQueryBuilder("leituras")
-                .getMany();
+                .createQueryBuilder("impressoras")
+                .innerJoinAndSelect("leituras", "leituras", "leituras.impressora_id=impressoras.id")
+                .getMany()
             return res.status(200).json(leituras);
         } catch (error) {
             console.log(error)
-            return res.status(500).json({message: 'Internal Server Error'})
+            return res.status(500).json({ message: 'Internal Server Error' })
         }
     }
-       
+
+    async listByImp(req: Request, res: Response) {
+        const { idImpressora } = req.params;
+        try {
+            const leituras = await LeituraRepository
+                .createQueryBuilder("leituras")
+                .where('leituras.impressora_id=:id', { id: idImpressora })
+                .orderBy('leituras.data', 'DESC')
+                .limit(2)
+                .getMany()
+
+            return res.status(200).json(leituras);
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ message: 'Internal Server Error' })
+        }
+    }
+
 }

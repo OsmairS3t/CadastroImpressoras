@@ -15,5 +15,6 @@ routes.get('/impressoras/:id/departamento', new ImpressoraController().listImpre
 
 routes.post('/leituras/:idImpressora/create', new LeituraController().create)
 routes.get('/leituras', new LeituraController().list)
+routes.get('/leituras/:idImpressora/lista', new LeituraController().listByImp)
 
 export default routes;
